@@ -11,8 +11,9 @@ import '@fontsource/roboto/700.css';
 import createEmotionCache from '../utility/createEmotionCache';
 import lightThemeOptions from '../styles/themes/lightTheme';
 import '../styles/globals.css';
+import RTLProvider from '../utility/RTL';
 interface MyAppProps extends AppProps {
-  emotionCache?: EmotionCache;
+	emotionCache?: EmotionCache;
 }
 
 const clientSideEmotionCache = createEmotionCache();
@@ -20,16 +21,22 @@ const clientSideEmotionCache = createEmotionCache();
 const lightTheme = createTheme(lightThemeOptions);
 
 const MyApp: React.FunctionComponent<MyAppProps> = (props) => {
-  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+	const {
+		Component,
+		emotionCache = clientSideEmotionCache,
+		pageProps,
+	} = props;
 
-  return (
-    <CacheProvider value={emotionCache}>
-      <ThemeProvider theme={lightTheme}>
-        <CssBaseline />
-        <Component {...pageProps} />
-      </ThemeProvider>
-    </CacheProvider>
-  );
+	return (
+		<CacheProvider value={emotionCache}>
+			<RTLProvider>
+				<ThemeProvider theme={lightTheme}>
+					<CssBaseline />
+					<Component {...pageProps} />
+				</ThemeProvider>
+			</RTLProvider>
+		</CacheProvider>
+	);
 };
 
 export default MyApp;
